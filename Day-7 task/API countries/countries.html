@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        var request = new XMLHttpRequest();
+        request.open("GET", "https://restcountries.com/v3.1/all");
+
+        request.send();
+
+        request.onload = function () {
+            var result = request.response;
+            var data = JSON.parse(result);
+
+
+            
+            //Task 1 - Get all the countries from the Asia continent /region using the Filter function
+
+            var ContNames = data.filter((element) => element.continents=="Asia").map((element) =>element.name.common);
+            console.log(ContNames); 
+
+            var ContOfficialNames = data.filter((element) => element.continents=="Asia").map((element) =>element.name.official);
+            console.log(ContOfficialNames);
+
+
+            //Task 2 - Get all the countries from the Population less than 2 lakh using filter function
+
+             var NamesCommon = data.filter((element) => element.population <= "200000").map((element) => element.name.common);
+            console.log(NamesCommon); 
+
+            var NamesOfficial = data.filter((element) => element.population <= "200000").map((element) => element.name.official);
+            console.log(NamesOfficial); 
+
+
+            //task 3 - Print the following details name, capital, flag using forEach function
+
+
+            result.forEach(element => {
+                console.log(element.name.common,element.capital,element.flag);
+               
+            });
+
+
+            //Task 4 - Print the total population of countries using reduce function
+
+              var Total = result.reduce((acc,element) => acc+element.population,0);  
+                    console.log(Total); 
+
+                      
+            //Task5 - Print the country which uses US Dollars as currency
+
+                    var final = result.filter((element) => element?.currencies?.USD).map((value) => value.name.official);
+                    console.log(final);
+        }
+
+
+
+
+    </script>
+</body>
+</html>
